@@ -29,6 +29,7 @@
 						 				<div>
 						 					  <h2>{this.props.name}</h2>
 						 					  <h2>{this.props.lastName}</h2>
+						 					  <h3>{this.props.say}</h3>
 						 					  <button onClick={this.props.deleteItem}>Delete me</button>
 						 				</div>
 							 			)
@@ -39,7 +40,8 @@
 			var App = React.createClass({
 						getInitialState (){
 							return {
-									people:people
+									people:people,
+									text  : 'Replaceme'
 							}
 						},
 						deleteItem (person) {
@@ -47,13 +49,19 @@
 								this.state.people.splice(this.state.people.indexOf(person),1);
 							  this.setState( {people: this.state.people });
 						},
+						inputChange (e){
+							this.setState({text:e.target.value});
+						},
 						render (){
 							  const that = this;
 								return (
+								<div>
+											<input value={this.state.text} onChange={this.inputChange}/>
 									<div>
 											{this.state.people.map((guy)=>{
-												return <Card deleteItem={that.deleteItem.bind(null,guy)} name={guy.name} lastName={guy.lastName}></Card>
+												return <Card deleteItem={that.deleteItem.bind(null,guy)} name={guy.name} lastName={guy.lastName} say={that.state.text}></Card>
 										})}
+									</div>
 									</div>
 								)
 						}
